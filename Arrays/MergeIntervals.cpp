@@ -13,12 +13,11 @@ vector<Interval> Solution::insert(vector<Interval> &intervals, Interval newInter
         return finalIntervalSet;
     }
     if(newInterval.end < intervals[0].start) {
-        finalIntervalSet.insert(it, newInterval);
+        finalIntervalSet.insert(finalIntervalSet.begin(), newInterval);
         return finalIntervalSet;
     }
     if(newInterval.start > intervals[n-1].end){
-        it = finalIntervalSet.end();
-        finalIntervalSet.insert(it, newInterval);
+        finalIntervalSet.insert(finalIntervalSet.end(), newInterval);
         return finalIntervalSet;
     }
     if(newInterval.start == intervals[n-1].end) {
