@@ -1,0 +1,38 @@
+vector<int> Solution::spiralOrder(const vector<vector<int> > &A) {
+    //boundaries of matrix yet to be covered
+    int top = 0, left = 0;
+    int bottom = A.size()-1, right = A[0].size()-1;
+    
+    vector<int>res;
+    
+    while( left<=right && top<=bottom) {
+        //left to right
+        for(int i=left; i<=right; i++){
+            res.push_back(A[top][i]);
+        }
+        top++;
+        if(top>bottom)
+            break;
+        //top to bottom
+        for(int i=top; i<=bottom; i++){
+            res.push_back(A[i][right]);
+        }
+        right--;
+        if(left>right)
+            break;
+        //right to left
+        for(int i=right; i>=left; i--){
+            res.push_back(A[bottom][i]);
+        }
+        bottom--;
+        if(top>bottom)
+            break;    
+        //bottom to top
+        for(int i=bottom; i>=top; i--){
+            res.push_back(A[i][left]);
+        }
+        left++;
+    }
+    
+    return res;
+}
