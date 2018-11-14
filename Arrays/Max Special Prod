@@ -1,0 +1,42 @@
+int Solution::maxSpecialProduct(vector<int> &A) {
+    int n = A.size();
+    stack<int> B;
+    vector<int>LSV(n,0);
+    LSV[0] = 0;
+    B.push(0);
+    for(int i=1; i<n; i++) {
+        while(!B.empty()){
+            if(A[B.top()]>A[i]) break;
+            B.pop();
+        }
+        LSV[i] = (B.empty())?0:B.top();
+        B.push(i);
+    }
+
+    vector<int>RSV(n,0);
+    stack<int>C;
+    RSV[n-1] = 0;
+    C.push(n-1);
+    for(int i=n-2; i>=0; i--){
+        while(!C.empty()){
+            //only time we are interested in value
+            if(A[C.top()]>A[i]) break;
+            C.pop();
+        }
+        RSV[i] = (C.empty())?0:C.top();
+        C.push(i);
+    }
+    
+    long long maxSP = -1;
+    for(int i=0; i<n; i++){
+        maxSP = max(LSV[i]*1LL*RSV[i], maxSP);
+    }
+    return maxSP%1000000007;
+}
+
+//How do we approach this problem, lets observe this for the case of LSV :
+
+//if the value of the ith element is greater than the previous element then the prevoius element is useless all further 
+//elements must use this instead.
+
+//We use stacks here as we only need the 'nearest'(top) element and we have to remove(pop) all smaller elements.
