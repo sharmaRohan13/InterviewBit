@@ -1,0 +1,18 @@
+int Solution::hammingDistance(const vector<int> &A) {
+    int n = A.size(), sum = 0, mod=1000000007;
+   
+    for(int bitPos=0; bitPos<31; bitPos++) {
+        int zeroCount=0, oneCount =0;
+        for(int i=0; i<n; i++) {
+            //bitwise & returns for 1 for 1 & 1
+            //using (1 << bitPos) we move 1 to every position
+            //and check using bitwise &
+            if(A[i] & (1 << bitPos)) oneCount++;
+            else zeroCount++;
+        }
+        sum += ((2LL * zeroCount * oneCount) % mod);
+        if (sum >= mod) sum -= mod;
+    }
+    
+    return sum;
+}
