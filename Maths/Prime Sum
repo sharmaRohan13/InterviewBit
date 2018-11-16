@@ -1,0 +1,48 @@
+vector<int> Solution::primesum(int A) {
+    vector<bool> isPrime(A+1,true);
+    isPrime[0]=false;
+    isPrime[1]=false;
+    
+    for(int i=2; i<=A; i++){
+        if(!isPrime[i]) continue;\
+        //all the numbers in the form a*b=N, will be covered
+        //when a reaches sqrt(N), {use when order is not important}
+        if (i > A/i) break;
+        //we start j from i*i because i*{1,2,3,4,5....i-1}
+        //have already been covered
+        for(int j=i*i; j<=A; j+=i) isPrime[j]=false;
+    }
+    
+    for(int i=2; i<=A; i++){
+        if(isPrime[i]==true && isPrime[A-i]==true) {
+            vector<int>sol;
+            sol.push_back(i);
+            sol.push_back(A-i);
+            return sol;
+        }
+    }
+}
+
+//solution 2
+//faster and requires less memory
+int isprime(int num) {
+    int divs=2;
+    for(;divs<=sqrt(num);divs++)
+        if(num%divs==0)
+            return 0;
+    return 1;        
+}
+ 
+vector<int> Solution::primesum(int A) {
+    vector<int> sol;
+    for(int test=2; test<=A;test++) {
+        if(isprime(test)==0)
+            continue;
+        else if(isprime(A-test)==1) {
+            sol.push_back(test);
+            sol.push_back(A-test);  
+            return sol;
+        }
+            
+    }
+}
