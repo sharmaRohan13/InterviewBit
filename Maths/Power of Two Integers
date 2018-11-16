@@ -1,0 +1,36 @@
+int gcd(int a, int b){
+    if(a%b==0) return b;
+    return gcd(b, a%b);
+}
+
+int Solution::isPower(int A) {
+    
+    if(A==1) return true;
+    //vector containing the number of times a fctor exists
+    vector<int> ntimesFactor;
+    //We check for factors only less than sqrt(A)
+    //Factors greater than sqrt(A) will not yield solution
+    for(int i=2; i*i<=A; i++) {
+      if(A%i==0){
+          int ntimesI = 0;
+          while(A>0 && A%i==0) {
+              ntimesI++;
+              A/=i;
+          }
+          ntimesFactor.push_back(ntimesI);
+      }  
+    }
+    //If any factor was greater than sqrt(A)    
+    if(A>1) return false;
+    //Only one fator existed
+    if(ntimesFactor.size()==1) return true;
+    
+    //If gcd > 1 then great
+    int g = gcd(ntimesFactor[0], ntimesFactor[1]);
+    int i=2;
+    while(i<ntimesFactor.size()){
+        if(g==1) return false;
+        g = gcd(g, ntimesFactor[i]);
+    }
+    return true;
+}
