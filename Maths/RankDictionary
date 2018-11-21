@@ -11,11 +11,11 @@ void initializeFactorials(int maxNum, vector<int>&facts) {
 long long int inverseNumber(int num) {
     // Inverse modulo : https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
     // Calculate num ^ MOD-2  % MOD
-    long long int ans = 1, base = (long long) num;
+    long long int ans = 1, base = num;
     int power = MOD - 2;
+    //Quick way to calculate (a^b)%c
     while (power > 0) {
-        if (power == 1) return (ans * base) % MOD;
-            
+        if (power == 1) return (ans * base) % MOD;  
         if (power % 2 == 0) {
             base = (base * base) % MOD;
             power /= 2;
