@@ -1,0 +1,40 @@
+#include<map>
+
+void findPFactors(int n, map<int,int>&factors){
+    //factors with 2
+    int count2 = 0;
+    while( n>0 && n%2 == 0) {
+        count2++;
+        n /= 2;
+    }
+    if(count2!=0)
+        factors.insert(pair<int,int>(2, count2));
+    
+    //other odd prime factors    
+    for(int i=3; n>0 && i<=sqrt(n); i+=2)
+        if(n%i==0){
+            int count =0;
+            while( n>0 && n%i==0) {
+                count++;
+                n /= i;
+            }
+            factors.insert(pair<int,int>(i, count));
+        }
+    // if n is a prime number
+    if(n!=0)
+        factors.insert(pair<int,int>(n, 1));
+}
+
+int Solution::cpFact(int A, int B) {
+    map<int, int> pfactorsA;
+    findPFactors(A, pfactorsA);
+    
+    map <int, int> :: iterator itr; 
+    
+    int ans = 1;
+    for(itr=pfactorsA.begin(); itr != pfactorsA.end(); ++itr) {
+        if(B%itr->first != 0) 
+            ans *= pow(itr->first, itr->second);
+    }    
+    return ans;
+}
