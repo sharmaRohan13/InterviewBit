@@ -1,0 +1,16 @@
+int Solution::sqrt(int A) {
+    int low = 1, high = A;
+    if(A==0) return 0;
+    int root;
+    if(A<0) return -1;
+    while(low<=high) {
+        int mid = (low+high)/2;
+        //avoid using mid*mid, as it might overflow
+        if(mid<=A/mid) {
+            low = mid+1;
+            root = mid;
+        }
+        else high = mid-1;
+    }
+    return root;
+}
