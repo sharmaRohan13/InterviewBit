@@ -5,7 +5,7 @@ const int MOD = 1000000007;
 ll fact[N];
 
 ll power(ll base,ll expnt) {
-    if(n<=0) return 1;
+    if(expnt<=0) return 1;
     
     ll retValue = power(base, expnt/2);
     retValue = (retValue*retValue)%MOD;
