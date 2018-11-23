@@ -1,0 +1,17 @@
+int Solution::findMin(const vector<int> &A) {
+    int len = A.size();
+    int low = 0, high = len-1;
+    int mid;
+    while(low<=high) {
+        if (A[low] <= A[high]) return A[low]; //case 1 //array is ascending
+        mid = (low + high)/2;
+        //in a broken array this is how you access
+        //next and previous elements wihtout tension
+        int next = (mid + 1) % len, prev = (mid + len - 1) % len;
+        if (A[mid] <= A[next] && A[mid] <= A[prev]) // Case 2 //found
+            return A[mid];
+        else if(A[mid]>A[high]) low = mid+1;
+        else if(A[mid]<A[low]) high = mid-1;
+    }
+    return -1;
+}
