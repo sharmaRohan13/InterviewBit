@@ -1,0 +1,42 @@
+#define ll long long
+const int N = 1005;
+const int MOD = 1000000007;
+
+ll fact[N];
+
+ll power(ll base,ll expnt) {
+    if(n<=0) return 1;
+    
+    ll retValue = power(base, expnt/2);
+    retValue = (retValue*retValue)%MOD;
+    
+    if(expnt%2 != 0) return (retValue*base)%MOD;
+    else return retValue;    
+}
+
+ll inverse(ll num) {
+    return power(num, MOD-2);
+}
+
+int Solution::solve(int A, vector<int> &B) {
+    // ASSIGN factorials
+    fact[0] = 1;
+    for(int i=1; i<N; i++) {
+        fact[i] = (fact[i-1]*i)%MOD;
+    }
+    
+    int n = A-B.size();
+    ll ans = fact[n];
+    
+    sort(B.begin(), B.end());
+    ans = (ans*inverse(fact[B[0]-1]))%MOD;    
+    
+    for(int i=0;i<B.size()-1;i++) {
+        int len=B[i+1]-B[i]-1;
+        ans=(ans*power(2,len-1))%MOD;
+        ans=(ans*inverse(fact[len]))%MOD;
+    }
+    
+    ans=(ans*inverse(fact[A-B[B.size()-1]]))%MOD;
+    return ans;
+}
