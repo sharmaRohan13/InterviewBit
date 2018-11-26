@@ -1,0 +1,39 @@
+int LessNums(const vector<int> &A, const int num) {
+    const int N = A.size();
+    int lo = 0, hi = N - 1;
+    
+    while (lo < hi) {
+        int m = lo + (hi - lo) / 2;
+        //exits at first occurance of num
+        //or first number larger than than num
+        if (A[m] >= num)    hi = m;
+        else    lo = m + 1;
+    }
+    //returns N when all numbers are lesser than num
+    return (A[lo] >= num) ? lo : N;
+}
+
+int LessNums(const vector<vector<int>> &A, const int num) {
+    const int M = A.size();
+    int ans = 0;
+    for (int i = 0; i < M; i++) ans += LessNums(A[i], num);
+    return ans;
+}
+
+int Solution::findMedian(vector<vector<int>> &A) {
+    const int M = A.size();
+    const int N = A[0].size();
+    const int target_index = (M * N) / 2;
+    
+    int lo = 0, hi = INT_MAX - 1;
+    while (lo < hi) {
+        int m = lo + (hi - lo + 1) / 2;
+        //Counts number of elements strictly less than m
+        int lessnums = LessNums(A, m);
+        //first number that has occurances less than target_index
+        if (lessnums <= target_index)   lo = m;
+        else  hi = m - 1;
+    }
+    return lo;
+}
+
