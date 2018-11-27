@@ -1,0 +1,47 @@
+// return the maximum element from the array 
+int getMax(vector<int> &boardLengths) { 
+    int max = INT_MIN, n = boardLengths.size(); 
+    for (int i = 0; i < n; i++)  
+        if (boardLengths[i] > max) 
+            max = boardLengths[i];  
+    return max; 
+} 
+// return the sum of the elements in the array 
+long long int getSum(vector<int> &boardLengths) { 
+    long long int total = 0, n = boardLengths.size(); 
+    for (int i = 0; i < n; i++) 
+        total += boardLengths[i]; 
+    return total; 
+} 
+
+//Don't understand how this works
+int minPainters(vector<int> &boardLengths, int maxTime) {
+    int currTime = 0, nPainters = 1, n = boardLengths.size();
+    for(int i=0; i<n; i++) {
+        currTime += boardLengths[i];
+        if(currTime > maxTime) {
+            currTime = boardLengths[i];
+            nPainters++;
+        }
+    }
+    return nPainters;
+}
+
+int Solution::paint(int nPainters, int time2Paint, vector<int> &boardLengths) {
+    const int nBoards = boardLengths.size();
+    long long int lo = getMax(boardLengths), hi = getSum(boardLengths);
+    //Finding min possible solution using binary search
+    //No equals as hi = mid, infinite loop
+    while(lo < hi) {
+        long long int mid = lo + (hi - lo) / 2;
+        //very very weird that this yields a solution
+        int k = minPainters(boardLengths, mid);
+        //if not possible with mid
+        //we move to the right interval without mid
+        if(k > nPainters)   lo = mid+1;
+        //if possible at mid
+        //we choose left interval with mid
+        else hi = mid;
+    }
+    return (lo*time2Paint)%10000003;
+}
