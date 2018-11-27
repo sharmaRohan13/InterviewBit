@@ -1,0 +1,22 @@
+int Solution::pow(int x, int power, int mod) {
+    long long int ans = 1;
+    int neg = false;
+    
+    if(x == 0) return 0;
+    if(power == 0)  return 1;
+    
+    if(x < 0) if(power % 2) neg = true;
+    x = abs(x);
+    long long int base = x % mod;
+    
+    while(power != 0) {
+        if(power % 2 != 0) {
+            ans = (ans * base)%mod;
+            power--;
+        }
+        base = (base * base)%mod;
+        power /= 2;
+    }
+    if(neg) return mod-(int)ans;
+    return (int)ans;
+}
