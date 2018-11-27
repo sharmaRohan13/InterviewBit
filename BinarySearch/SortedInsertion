@@ -1,0 +1,24 @@
+int Solution::searchInsert(vector<int> &A, int B) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    int n = A.size();
+    if(B>A[n-1]) return n;
+    
+    if(A.size() == 1) {
+        if(B > A[0])
+            return 1;
+        else return 0;
+    }
+    
+    int lo = 0, hi = n-1;
+    //find number just greator than B
+    while(lo < hi ) {
+        int mid = lo + (hi - lo)/2;
+        if(A[mid] == B) return mid;
+        else if(A[mid] > B) hi = mid;
+        else lo = mid + 1;
+    }
+    return hi;
+}
