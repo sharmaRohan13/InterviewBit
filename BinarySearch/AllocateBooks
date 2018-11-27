@@ -1,0 +1,47 @@
+#define lint long long int
+
+int nStudentsrequired(vector<int> &A, lint maxPages) {
+    int n = A.size();
+    int pages = 0, sRequired = 1;
+    for(int i=0; i<n; i++) {
+        pages += A[i];
+        if(pages > maxPages) {
+            pages = A[i];
+            sRequired++;
+        }        
+    }
+    return sRequired;
+}
+
+int getMax(vector<int> &A) {
+    int n = A.size(), maxNum = INT_MIN;
+    for(int i=0; i<n; i++) {
+        maxNum = max(maxNum, A[i]);
+    }
+    return maxNum;
+}
+
+int getSum(vector<int> &A) {
+    int n = A.size();
+    lint sum = 0;
+    for(int i = 0; i<n; i++) {
+        sum += A[i];
+    }
+    return sum;
+}
+
+int Solution::books(vector<int> &A, int B) {
+    int n = A.size();
+    if(n < B)   return -1;
+    lint lo = getMax(A), hi = getSum(A);
+    while(lo < hi) {
+        lint mid = (lo + hi)/2;
+        int sRequired = nStudentsrequired(A, mid);
+        if(B >= sRequired) {
+            hi = mid;
+        }
+        else 
+            lo = mid + 1;
+    }
+    return lo;
+}
