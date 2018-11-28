@@ -1,0 +1,44 @@
+int Solution::search(const vector<int> &A, int B) {
+    int n = A.size();
+    int lo = 0, hi = n - 1;
+    int pos = -1;
+    
+    //finding the min element(pivot)
+    while(lo <= hi) {
+        //sequence is in perfect ascending order
+        //first element is minimum
+        if(A[hi] > A[lo]) {
+            pos = lo;
+            break;
+        }
+        int mid = lo + (hi-lo)/2;
+        int next = (mid + 1) % n, prev = (mid + n - 1) % n;
+        //element is min
+        if (A[mid] <= A[next] && A[mid] <= A[prev]) {
+            pos = mid;
+            break;
+        }
+        else if(A[mid]>A[hi]) lo = mid+1;
+        else if(A[mid]<A[lo]) hi = mid-1;
+    }
+    //actual position in rotated array
+    lo = pos;
+    hi = (pos - 1 + n) % n;
+    
+    //we nned to check this because of modulus
+    //as we cross last element it will be again
+    //set to the first element
+    if(B > A[hi])   return -1;
+    if(B < A[lo])   return -1;
+    
+    //position in sorted array
+    while((lo - pos + n)%n <= (hi - pos + n)%n) {
+        //position in rotated arrray
+        int mid = (((lo-pos+n)%n + (hi-pos+n)%n) / 2 + pos) % n;
+        if(A[mid] == B) return mid;
+        else if (A[mid] > B)  hi = (mid - 1 + n)%n;
+        else lo = (mid + 1) % n;
+    }
+    
+    return -1;
+}
