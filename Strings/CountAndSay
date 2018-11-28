@@ -1,0 +1,26 @@
+string genNextString(string str) {
+    string next = "";
+    int n = str.size(), i = 0;
+    while(i < n) {
+        char ch = str[i];
+        int count = 0;
+        while(i < n && str[i] == ch) {
+            count++; 
+            i++;
+        }
+        next += to_string(count);
+        next.push_back(ch);
+    }
+    return next;
+}
+
+string Solution::countAndSay(int A) {
+    int count = 1;
+    string str = "1", next = "1";
+    while(count < A) {
+        next = genNextString(str);
+        count++;
+        str = next;
+    }
+    return str;
+}
