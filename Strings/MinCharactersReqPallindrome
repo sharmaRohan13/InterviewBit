@@ -1,0 +1,18 @@
+int Solution::solve(string A) {
+    int n = A.size();
+    int start = 0, end = n-1;
+    int tmpEnd = end;
+    
+    while(start < tmpEnd) {
+        if( A[start] == A[tmpEnd] ) {
+            start++;
+            tmpEnd--;
+        }
+        else {
+            start = 0;
+            end--;
+            tmpEnd = end;
+        }
+    }
+    return n-end-1;
+}
