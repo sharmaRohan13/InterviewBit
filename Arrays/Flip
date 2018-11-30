@@ -1,0 +1,45 @@
+vector<int> Solution::flip(string A) {
+    int n = A.size();
+    vector<int> sol;
+    
+    int l = 0, r;
+    while( l < n) {
+        if(A[l] == '1') l++;
+        else break;
+    }
+    r = l;
+    
+    if(l == n)  return sol;
+    
+    int diff = 1, maxDiff = 1, lfinal = l, rfinal = r;
+    r++;
+    while(r < n) {
+       if( A[r] == '1') {
+           diff --;
+           if(diff < 0) {
+                l = r + 1;
+                while( l < n) {
+                    if(A[l] == '1') l++;
+                    else {
+                        r = l;
+                        diff = 1;
+                        break;
+                    }
+                }
+           }
+       } 
+       else {
+           diff++;
+           if( diff > maxDiff) {
+               maxDiff = diff;
+               lfinal = l;
+               rfinal = r;
+           }
+       }
+       r++;
+    }
+    
+    sol.push_back(lfinal+1);
+    sol.push_back(rfinal+1);
+    return sol;
+}
