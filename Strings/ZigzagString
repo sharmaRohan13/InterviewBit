@@ -1,0 +1,28 @@
+string Solution::convert(string A, int B) {
+    int n = A.size();
+    if(B == 1)  return A;
+    
+    vector<string> zigzag(B, "");
+    zigzag[0] += A[0];
+    
+    int i = 1;
+    while(i < n) {
+        int cnt = 1;
+        while(i < n && cnt < B){
+            zigzag[cnt] += A[i];
+            cnt++; i++;
+        }
+        cnt -= 2;
+        while(i < n && cnt >=0){
+            zigzag[cnt] += A[i];
+            cnt--; i++;
+        }
+    }
+    
+    string ans = "";
+    for(int j = 0; j < B; j++) {
+        ans += zigzag[j];
+    }
+    
+    return ans;
+}
