@@ -1,0 +1,28 @@
+int Solution::atoi(const string A) {
+    bool pstv = true;
+    int n = A.size(), i = 0, ans = 0;
+    if(A[0] == '-') {
+        pstv = false;
+        i++;
+    }
+    if(A[0] == '+') {
+        i++;
+    }
+    while(i < n) {
+        if( A[i] < '0' || A[i] > '9') {
+            if(A[i] == ' ' || '.') {
+                if(pstv) return ans;
+                return -1 * ans;
+            }
+            else return 0;
+        }
+        if(ans > INT_MAX/10) {
+            if(pstv) return INT_MAX;
+            else return INT_MIN;
+        }
+        ans = ans * 10 + (A[i]-'0');
+        i++;
+    }
+    if(pstv) return ans;
+    return -1 * ans;
+}
