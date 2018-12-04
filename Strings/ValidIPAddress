@@ -1,0 +1,47 @@
+bool checkstring(string A) {
+    int n = A.size();
+    if(n<=0 || n >= 4) return false;
+    int check = stoi(A);
+    if(check > 255) return false;
+    if(n >= 2)  if(A[0] == '0') return false;
+    return true;
+}
+
+string checkValid(string A, int pos1, int pos2, int pos3) {
+    int n = A.size();
+    string result = "";
+    
+    string s1 = A.substr(0, pos1);
+    if(!checkstring(s1)) return "";
+    else result += s1;
+    
+    string s2 = A.substr(pos1, pos2-pos1);
+    if(!checkstring(s2)) return "";
+    else result = result + '.' + s2;
+    
+    string s3 = A.substr(pos2, pos3-pos2);
+    if(!checkstring(s3)) return "";
+    else result = result + '.' + s3;
+    
+    string s4 = A.substr(pos3, n-pos3);
+    if(!checkstring(s4)) return "";
+    else result = result + '.' + s4;
+    
+    return result;
+}
+
+vector<string> Solution::restoreIpAddresses(string A) {
+    int n = A.size();
+    vector<string> sol;
+    
+    if( n < 4 || n > 12) return sol;
+    for(int pos1 = 1; pos1 < n-2; pos1++) 
+        for(int pos2 = pos1+1; pos2 < n-1; pos2++) 
+            for(int pos3 = pos2+1; pos3 < n; pos3++) {
+                string newstr = checkValid(A, pos1, pos2, pos3);
+                if(newstr != "")  sol.push_back(newstr);
+            }
+            
+    sort(sol.begin(), sol.end());
+    return sol;
+}
