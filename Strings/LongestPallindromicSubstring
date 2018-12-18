@@ -1,0 +1,27 @@
+string Solution::longestPalindrome(string A) {
+    //There is DP solution t->n^2; s->n^2
+    int n = A.size(), start=0, maxLen = 1;
+    
+    for(int i=1; i<n; i++) {
+        int low=i-1, high=i;
+        while(low>=0 && high<=n-1 && A[low]==A[high]) {
+            if(high-low+1 > maxLen) {
+                maxLen = high-low+1;
+                start = low;
+            }
+            high++;
+            low--;
+        }
+        low=i-1;
+        high=i+1;
+        while(low>=0 && high<=n-1 && A[low]==A[high]) {
+            if(high-low+1 > maxLen) {
+                maxLen = high-low+1;
+                start = low;
+            }
+            high++;
+            low--;
+        }
+    }
+    return A.substr(start, maxLen);
+}
