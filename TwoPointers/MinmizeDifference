@@ -1,0 +1,15 @@
+int Solution::solve(vector<int> &A, vector<int> &B, vector<int> &C) {
+    int l = A.size(), m = B.size(), n = C.size();
+    int i=0, j=0, k=0;
+    int minDiff = INT_MAX;
+    while(i<l && j<m && k<n) {
+        int maxEl = max(C[k], max(A[i], B[j]));
+        int minEl = min(C[k], min(A[i], B[j]));
+        if(maxEl - minEl < minDiff)
+            minDiff = maxEl - minEl;
+        if(minEl == A[i])   { i++; continue;}
+        if(minEl == B[j])   { j++; continue;}
+        if(minEl == C[k])   k++;
+    }
+    return minDiff;
+}
