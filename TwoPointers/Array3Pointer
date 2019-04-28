@@ -1,0 +1,17 @@
+int Solution::minimize(const vector<int> &A, const vector<int> &B, const vector<int> &C) {
+    int l = A.size(), m = B.size(), n = C.size();
+    int i = 0 , j = 0 , k = 0;
+    int ans = INT_MAX;
+    while( i < l && j < m && k < n) {
+        ans = min(ans, max(abs(A[i]-B[j]), max(abs(B[j]-C[k]), abs(C[k]-A[i]))));
+        if(A[i] <= B[j]) {
+            if(A[i] <= C[k]) i++;
+            else k++;
+        }
+        else {
+            if(B[j] <= C[k]) j++;
+            else k++;
+        }
+    }
+    return ans;
+}
